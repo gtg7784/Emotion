@@ -2,7 +2,7 @@
 * Filename:     crypto.c
 * Author:       EMOTION the artificial intelligence club of sunrin internet high school
 * Copyright:    GNU GENERAL PUBLIC LICENSE
-* Disclaimer:   This code is presented "as is" without any guarantees.
+* Disclaimer:   This code is base64, url, sha256, md5, rsa en/decoder
 * Details:      Performs known-answer tests on the corresponding AES
                 implementation. These tests do not encompass the full
                 range of available test vectors and are not sufficient
@@ -13,16 +13,38 @@
 *********************************************************************/
 
 
+/*********************************************************************
+ * Type: base64
+ * Role: 이다은
+ * Principle: base64는 문자열을 입력받아 8bit의 데이터를 6bit로 표기
+*********************************************************************/
+
+
+/*********************************************************************
+ * Type: sha256
+ * Role: 10101 김재현
+ * Principle: 
+*********************************************************************/
+
+
+/*********************************************************************
+ * Type: md5
+ * Role: 10411 박민준
+ * Principle: 
+*********************************************************************/
+
+
+/*********************************************************************
+ * Type: url, rsa
+ * Role: 고태건
+ * Principle: 
+*********************************************************************/
+
+
 #include <stdio.h>
 #include <unistd.h>
 
-const char base64chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
-/*
- TODO:
-    1. EMOTION CRYPTO ~~ -> ASCII
-    2. 
-*/
+const char base64table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 void printEmotion(){
     printf("                                                ,----,                                    \n");
@@ -130,7 +152,7 @@ int Encrypt(){
     printf("4. MD5\n");
     printf("5. RSA\n");
     printf("ANY OHTER NUMBER TO EXIT...\n\n");
-    printf(">    ");
+    printf("> ");
     scanf("%d", &menu);
 
     switch (menu){
@@ -169,10 +191,9 @@ int Decrypt(){
     printf("Select the number…\n");
     printf("1. BASE64\n");
     printf("2. URL\n");
-    printf("3. MD5\n");
-    printf("4. RSA\n");
+    printf("3. RSA\n");
     printf("ANY OHTER NUMBER TO EXIT...\n\n");
-    printf(">    ");
+    printf("> ");
     scanf("%d", &menu);
 
     switch (menu){
@@ -185,10 +206,6 @@ int Decrypt(){
             break;
 
         case 3:
-            md5(2);
-            break;
-
-        case 4:
             rsa(2);
             break;
     
@@ -223,9 +240,13 @@ int url(int type){
 }
 
 int sha256(){
-        printf("encrypting...");
-         
-        printf("asdf");
+    char input;
+    printf("Type something you want to encode\n>");
+    scanf("%s", input);
+
+    printf("encrypting...");
+
+    printf("asdf");
 }
 
 int md5(int type){
@@ -262,7 +283,7 @@ int main(){
     printf("1. ENCRYPT\n");
     printf("2. DECRYPT\n");
     printf("ANY OHTER NUMBER TO EXIT...\n\n");
-    printf(">    ");
+    printf("> ");
     scanf("%d", &menu);
     
     switch (menu){
