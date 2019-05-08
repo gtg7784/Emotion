@@ -3,3 +3,6 @@
 
 #gcc output
 *.out
+
+#keys
+*.pem
