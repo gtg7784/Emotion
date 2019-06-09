@@ -13,23 +13,26 @@ int randX = 0; // 먹이 생성을 위한 랜덤 x 좌표
 int randY = 0; // 먹이 생성을 위한 랜덤 y 좌표
 int speed = 150; // 게임 속도
 
-unsigned char warm[1823];
-// 게임의 맵 좌표(총 1823칸)에 해당하는 곳에 지렁이 몸의 존재여부를 체크하기 위하여
-//  지렁이 머리가 몸통에 박았을 경우 지렁이 머리 위치가 몸통위치와 겹치는 것을 체크하기 위한것
-//  1823 = (y)*76 + x (y최대가 75이고 x최대가 23)
+unsigned char warm[1403];
+// 지렁이 머리가 몸통에 박았을 때 체크하는 거
+// lim(y)*(lim(x)+1)+lim(x) => (y+1)(x*2+2)+(x*2+1)
+// 왜냐하면 x는 2byte 니까
 
-unsigned int removeTailCheck[75*23];
-// 지렁이의 꼬리가 지나가는 부분(빈공간이 될 부분)을 체크하기 위한 배열로 배열의 값에는 맵의 좌표가 저장됨
-//  pointHead와 pointTail를 포인터로 사용함
+unsigned int removeTailCheck[51*26];
+// pointHead와 pointTail을 포인터로 쓰임
+// 지렁이의 꼬리가 지나가는 부분을 체크하기 위한 배열
+// 배열의 값에는 맵의 좌표가 저장됨
+// lim(x)*lim(y) => (x*2+1)(y+1)
+// 왜냐하면 x는 2byte 니까
 
 int pointHead; 
 // removeTailCheck의 포인터로 쓰임
-//지렁이의 몸이 커질때마다 포인터를 1씩 증가시키면서 포인터가 가리키는 값에는 새로이 추가되는(먹이를 먹어서) 지렁이 몸의 위치값을 나타냄
+// 지렁이의 몸이 커질때마다 포인터를 1씩 증가시키면서 포인터가 가리키는 값에는 새로이 추가되는(먹이를 먹어서) 지렁이 몸의 위치값을 나타냄
 
 int pointTail;
 // removeTailCheck의 포인터로 쓰임
-//지렁이의 자취(꼬리가 지나가는 부분)를 체크하여 없애주기 위한 포인터
-//지렁이가 움직일때마다 pointTail이 가리키는 부분에 저장된 맵의 좌표로 가서 그곳의 지렁이 흔적을 없앰
+// 지렁이가 지나간 부분을 체크하여 없애주기 위한 포인터
+// 지렁이가 움직일때마다 pointTail이 가리키는 부분에 저장된 맵의 좌표로 가서 지렁이가 지나간 부분을 없앰
 
 // (x, y)로 커서를 이동시키는 함수
 void setLocation(int x, int y){
@@ -37,27 +40,27 @@ void setLocation(int x, int y){
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
-// 50 * 50 윤곽선 출력
+// 25 * 25 윤곽선 출력
 void printBorder(){
-    int x = 39;
-    int y = 24;
+    int x = 25;
+    int y = 25;
 
     printf("%c%c", 0xa6, 0xa3); // ┌
-    for (int i = 0; i < x - 2; i++){
+    for (int i = 0; i < x; i++){
         printf("%c%c", 0xa6, 0xa1); // ─
     }
     printf("%c%c\n", 0xa6, 0xa4); // ┐
 
-    for(int i = 0; i < y - 2; i++){
+    for(int i = 0; i < y; i++){
         printf("%c%c", 0xa6, 0xa2); // │
-        for(int j = 0; j < x - 2; j++){
+        for(int j = 0; j < x; j++){
             printf("  ");
         }
         printf("%c%c\n", 0xa6, 0xa2); // │
     }
 
     printf("%c%c", 0xa6, 0xa6); // └
-    for(int i = 0; i < x - 2; i++){
+    for(int i = 0; i < x; i++){
         printf("%c%c", 0xa6, 0xa1); // ─
     }
     printf("%c%c\n", 0xa6, 0xa5); // ┘
