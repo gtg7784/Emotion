@@ -27,7 +27,7 @@ unsigned int removeTailCheck[51*26];
 
 int pointHead; 
 // removeTailCheck의 포인터로 쓰임
-// 지렁이의 몸이 커질때마다 포인터를 1씩 증가시키면서 포인터가 가리키는 값에는 새로이 추가되는(먹이를 먹어서) 지렁이 몸의 위치값을 나타냄
+// 지렁이의 몸이 커질때마다 포인터를 1씩 증가시키면서 포인터가 가리키는 값에는 커진 지렁이 몸의 위치값을 나타냄
 
 int pointTail;
 // removeTailCheck의 포인터로 쓰임
@@ -42,8 +42,8 @@ void setLocation(int x, int y){
 
 // 25 * 25 윤곽선 출력
 void printBorder(){
-    int x = 25;
-    int y = 25;
+    int x = 22;
+    int y = 22;
 
     printf("%c%c", 0xa6, 0xa3); // ┌
     for (int i = 0; i < x; i++){
@@ -67,7 +67,7 @@ void printBorder(){
 }
 
 int makeFeed(){
-    randX = (rand() % 37) * 2 + 3; // 난수 생성하여 먹이의 x 좌표 설정
+    randX = (rand() % 22) * 2 + 3; // 난수 생성하여 먹이의 x 좌표 설정
     randY = (rand() % 22) + 2; // 난수 생성하여 먹이의 y 좌표 설정
     setLocation(randX, randY); // 먹이 좌표로 이동
     printf("□"); // 먹이 출력
@@ -76,7 +76,7 @@ int makeFeed(){
 
 void gameover(){
     system("cls"); // 화면을 지운다
-    setLocation(30, 10); // (30, 10) 좌표로 커서 이동
+    setLocation(10, 10); // (30, 10) 좌표로 커서 이동
     printf("GAME OVER\n");
 }
 
@@ -146,7 +146,7 @@ int main(){
                 }
             } else if(key == 77){ // →
                 x += 2;
-                if(x > 75){
+                if(x > 45){
                     gameover();
                     break;
                 }
@@ -158,13 +158,13 @@ int main(){
                 makeFeed();
 
                 //아래 코드는 지렁이가 먹이를 먹었으므로 새로이 추가된 몸통 좌표를 추가하고 지렁이의 자취좌표를 추가하는 것
-                removeTailCheck[pointHead] =  (y)*76 + x; // 지렁이의 자취를 맵좌표값으로 추가
+                removeTailCheck[pointHead] =  (y)*45 + x; // 지렁이의 자취를 맵좌표값으로 추가
                 pointHead++;
 
                 if(pointHead >= 1656){
                     pointHead = 0;
                 }
-                warm[(y)*76 + x] = 1; //몸통 좌표 추가(1이 몸통이 있다는 표시, 0이 몸통이 없다는 표시)
+                warm[(y)*45 + x] = 1; //몸통 좌표 추가(1이 몸통이 있다는 표시, 0이 몸통이 없다는 표시)
                 warmBody++;
 
                 if(warmBody >= 10){
@@ -178,8 +178,8 @@ int main(){
             }
 
             //꼬리가 지나간 부위를 지우기 위한 코드임
-            prevY = removeTailCheck[pointTail]/76;  // prevX에 임시저장
-            prevX = removeTailCheck[pointTail]%76;
+            prevY = removeTailCheck[pointTail]/45;  // prevX에 임시저장
+            prevX = removeTailCheck[pointTail]%45;
             if(prevX == 0){
                 prevX = 75;
             }
@@ -192,7 +192,7 @@ int main(){
             }
 
             //지렁이 머리가 가는 방향으로 지렁이 머리를 새로이 그려넣기 위한 코드임
-            removeTailCheck[pointHead] =  (y)*76 + x;
+            removeTailCheck[pointHead] =  (y)*45 + x;
             if(warm[removeTailCheck[pointHead]] == 0){ //지렁이 머리가 있을 곳에 지렁이 몸통이 없을 경우
                 warm[removeTailCheck[pointHead]] = 1;
             }else{
