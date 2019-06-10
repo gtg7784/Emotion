@@ -44,6 +44,7 @@ void setLocation(int x, int y) {
 void printBorder() {
 	int x = 22;
 	int y = 22;
+	int i, j;
 
 	printf("%c%c", 0xa6, 0xa3); // ┌
 	for (int i = 0; i < x; i++) {
@@ -51,16 +52,16 @@ void printBorder() {
 	}
 	printf("%c%c\n", 0xa6, 0xa4); // ┐
 
-	for (int i = 0; i < y; i++) {
+	for (i = 0; i < y; i++) {
 		printf("%c%c", 0xa6, 0xa2); // │
-		for (int j = 0; j < x; j++) {
+		for (j = 0; j < x; j++) {
 			printf("  ");
 		}
 		printf("%c%c\n", 0xa6, 0xa2); // │
 	}
 
 	printf("%c%c", 0xa6, 0xa6); // └
-	for (int i = 0; i < x; i++) {
+	for (i = 0; i < x; i++) {
 		printf("%c%c", 0xa6, 0xa1); // ─
 	}
 	printf("%c%c\n", 0xa6, 0xa5); // ┘
